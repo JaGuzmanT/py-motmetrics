@@ -387,34 +387,30 @@ def compute_motchallenge(dir_name):
 acc = compute_motchallenge("data_dir")
 mh = mm.metrics.create()
 
-deta, assa, hota = [], [], []
-for alpha_idx in range(len(acc)):  # Loop over different alpha values
-    summary = mh.compute_many(
-        [acc[alpha_idx]],
-        metrics=[
-            "deta_alpha",
-            "assa_alpha",
-            "hota_alpha",
-        ],
-    )
-    deta.append(float(summary["deta_alpha"].iloc[0]))
-    assa.append(float(summary["assa_alpha"].iloc[0]))
-    hota.append(float(summary["hota_alpha"].iloc[0]))
-
-deta = sum(deta) / len(deta)
-assa = sum(assa) / len(assa)
-hota = sum(hota) / len(hota)
-print(f"{dname}: HOTA: {hota * 100:.3f} | AssA: {assa * 100:.3f} | DetA: {deta * 100:.3f}")
-
+summary = mh.compute_many(
+    accs[dataset_idx],
+    metrics=[
+        "deta_alpha",
+        "assa_alpha",
+        "hota_alpha",
+    ],
+    generate_overall=True,  # `Overall` is the average we need only
+)
+strsummary = mm.io.render_summary(
+    summary.iloc[[-1], :],  # Use list to preserve `DataFrame` type
+    formatters=mh.formatters,
+    namemap={"hota_alpha": "HOTA", "assa_alpha": "ASSA", "deta_alpha": "DETA"},
+)
+print(strsummary)
 """
 # motmetrics/data/TUD-Campus
-TUD-Campus: HOTA: 39.140 | AssA: 36.912 | DetA: 41.805
+         DETA  ASSA  HOTA
+OVERALL 41.8% 36.9% 39.1%
 # motmetrics/data/TUD-Stadtmitte
-TUD-Stadtmitte: HOTA: 39.785 | AssA: 40.884 | DetA: 39.227
+         DETA  ASSA  HOTA
+OVERALL 39.2% 40.9% 39.8%
 """
 ```
-
-**Merging this for-loop into a single function is a work in progress.**
 
 ### Computing distances
 
