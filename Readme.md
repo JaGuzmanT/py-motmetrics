@@ -388,7 +388,7 @@ acc = compute_motchallenge("data_dir")
 mh = mm.metrics.create()
 
 summary = mh.compute_many(
-    accs[dataset_idx],
+    acc,
     metrics=[
         "deta_alpha",
         "assa_alpha",
