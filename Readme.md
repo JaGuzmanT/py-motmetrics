@@ -370,6 +370,7 @@ OVERALL 80.0% 80.0% 80.0% 80.0% 80.0%  4  2  2  0  2  2   1   1 50.0% 0.275
 Computing HOTA metrics is also possible. However, it cannot be used with the `Accumulator` class directly, as HOTA requires to computing a reweighting matrix from all the frames at the beginning. Here is an example of how to use it:
 
 ```python
+import os
 import numpy as np
 import motmetrics as mm
 
@@ -403,10 +404,10 @@ strsummary = mm.io.render_summary(
 )
 print(strsummary)
 """
-# motmetrics/data/TUD-Campus
+# data_dir=motmetrics/data/TUD-Campus
          DETA  ASSA  HOTA
 OVERALL 41.8% 36.9% 39.1%
-# motmetrics/data/TUD-Stadtmitte
+# data_dir=motmetrics/data/TUD-Stadtmitte
          DETA  ASSA  HOTA
 OVERALL 39.2% 40.9% 39.8%
 """
